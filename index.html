@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f1419">
+<title>Treino Samuel - 3x semana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f1419; --surf: #1a1f2e; --surf2: #232a3d;
+  --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+  --text: #e8eaed; --dim: #9ca3af; --muted: #6b7280;
+  --accent: #d4a373; --accent-bg: rgba(212,163,115,0.14);
+  --warn-bg: rgba(245,158,11,0.12); --warn: #f59e0b;
+  --ok: #10b981;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+}
+html { -webkit-text-size-adjust: 100%; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text);
+       line-height: 1.55; font-size: 15px; -webkit-font-smoothing: antialiased;
+       padding-bottom: 80px; }
+.wrap { max-width: 680px; margin: 0 auto; padding: 22px 15px; }
+header { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+           color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+h1 { font-family: var(--serif); font-size: 28px; font-weight: 500;
+     line-height: 1.15; letter-spacing: -.02em; margin-bottom: 5px; }
+h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.sub { color: var(--dim); font-size: 13px; }
+.alert { background: var(--warn-bg); border-left: 3px solid var(--warn);
+         padding: 11px 13px; border-radius: 6px; margin-bottom: 20px;
+         font-size: 13px; line-height: 1.6; color: var(--dim); }
+.alert strong { color: var(--warn); }
+.meta { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 22px; }
+.meta-card { background: var(--surf); border: 1px solid var(--border);
+             border-radius: 8px; padding: 10px 12px; }
+.meta-lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 3px; font-weight: 600; }
+.meta-val { font-size: 13px; font-weight: 500; }
+.tabs { display: flex; gap: 6px; margin-bottom: 16px; background: var(--surf);
+        padding: 5px; border-radius: 10px; border: 1px solid var(--border);
+        position: sticky; top: 8px; z-index: 10; }
+.tab { flex: 1; padding: 9px 6px; border: none; background: transparent;
+       color: var(--dim); font-family: var(--sans); font-size: 13px; font-weight: 500;
+       cursor: pointer; border-radius: 7px; -webkit-tap-highlight-color: transparent; }
+.tab.on { background: var(--accent); color: #1a1f2e; font-weight: 600; }
+.tab small { display: block; font-size: 10px; opacity: .7; margin-top: 2px; font-weight: 400; }
+.progress { display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+            padding: 8px 12px; background: var(--surf); border: 1px solid var(--border);
+            border-radius: 8px; font-size: 12px; }
+.progress-bar { flex: 1; height: 4px; background: var(--surf2); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); transition: width .3s; width: 0%; }
+.prog-txt { color: var(--dim); min-width: max-content; }
+.day { display: none; }
+.day.on { display: block; }
+.day-header { margin-bottom: 14px; }
+.day-title { font-family: var(--serif); font-size: 21px; font-weight: 500; letter-spacing: -.01em; }
+.day-sub { color: var(--dim); font-size: 13px; margin-top: 3px; }
+.section-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+                 color: var(--muted); font-weight: 600; margin: 20px 0 10px;
+                 display: flex; align-items: center; gap: 8px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.ex { background: var(--surf); border: 1px solid var(--border);
+      border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+.ex.done { opacity: .45; }
+.ex-img-wrap { width: 100%; background: #f0efe8; position: relative; }
+.ex-img { display: block; width: 100%; height: auto; max-height: 260px;
+          object-fit: contain; padding: 8px 12px; }
+.ex-img-placeholder { display: flex; flex-direction: column; align-items: center;
+                      justify-content: center; gap: 6px; min-height: 90px;
+                      color: var(--muted); font-size: 11px; font-weight: 500;
+                      padding: 20px; }
+.ex-body { padding: 13px 14px 14px; }
+.ex-head { display: flex; align-items: flex-start; gap: 11px; margin-bottom: 8px; }
+.ex-num { font-family: var(--serif); font-size: 19px; font-weight: 500;
+          color: var(--accent); line-height: 1; min-width: 16px; }
+.ex-title { flex: 1; font-size: 14px; font-weight: 600; line-height: 1.35; padding-top: 1px; }
+.ex-check { width: 25px; height: 25px; border: 1.5px solid var(--border2); border-radius: 7px;
+            cursor: pointer; flex-shrink: 0; appearance: none; -webkit-appearance: none;
+            background: transparent; position: relative; margin-top: 1px; }
+.ex-check:checked { background: var(--ok); border-color: var(--ok); }
+.ex-check:checked::after { content: 'OK'; position: absolute; top: 50%; left: 50%;
+                           transform: translate(-50%,-50%); color: #fff; font-size: 9px; font-weight: 700; }
+.pills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+.pill { font-size: 11px; padding: 3px 9px; border-radius: 99px;
+        background: var(--surf2); color: var(--dim); font-weight: 500; }
+.pill.primary { background: var(--accent-bg); color: var(--accent); }
+.ex-tip { font-size: 13px; line-height: 1.55; color: var(--dim); margin-bottom: 10px; }
+.ex-tip strong { color: var(--text); font-weight: 600; }
+.weight-row { display: flex; align-items: center; gap: 9px; padding: 7px 10px;
+              background: var(--surf2); border-radius: 7px; margin-bottom: 9px; }
+.weight-label { font-size: 11px; color: var(--muted); font-weight: 500; flex-shrink: 0; }
+.weight-input { flex: 1; background: transparent; border: none; color: var(--text);
+                font-family: var(--sans); font-size: 14px; font-weight: 600;
+                padding: 3px 0; outline: none; min-width: 0; }
+.weight-input::placeholder { color: var(--muted); font-weight: 400; }
+.weight-saved { font-size: 10px; color: var(--ok); opacity: 0; flex-shrink: 0; font-weight: 600; }
+.weight-saved.show { opacity: 1; }
+.video-row { display: flex; align-items: center; gap: 6px; }
+.video-link { font-size: 12px; color: var(--accent); text-decoration: none; opacity: .85; }
+.video-edit-btn { background: transparent; border: none; color: var(--muted);
+                  font-size: 11px; cursor: pointer; padding: 2px 6px; }
+.video-edit-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.video-url-input { flex: 1; background: var(--surf2); border: 1px solid var(--border2);
+                   border-radius: 7px; color: var(--text); font-family: var(--sans);
+                   font-size: 12px; padding: 6px 9px; outline: none; min-width: 0; }
+.video-save-btn, .video-cancel-btn { flex-shrink: 0; background: transparent;
+                   border: 1px solid var(--border2); border-radius: 6px; color: var(--dim);
+                   font-family: var(--sans); font-size: 11px; font-weight: 600;
+                   padding: 5px 9px; cursor: pointer; }
+.video-save-btn:hover { background: var(--accent); color: #1a1f2e; border-color: var(--accent); }
+details { margin-bottom: 9px; background: var(--surf); border: 1px solid var(--border); border-radius: 10px; }
+summary { padding: 11px 14px; cursor: pointer; font-weight: 500; font-size: 13px;
+          list-style: none; display: flex; align-items: center; justify-content: space-between; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '+'; font-size: 17px; color: var(--muted); }
+details[open] summary::after { content: '-'; }
+details > div { padding: 0 14px 14px; font-size: 13px; line-height: 1.65; color: var(--dim); }
+details > div ul { padding-left: 18px; margin-top: 5px; }
+details > div li { margin-bottom: 4px; }
+details > div p { margin-bottom: 8px; }
+details > div strong { color: var(--text); }
+.reset-btn { display: block; width: 100%; padding: 10px; margin-top: 20px;
+             background: transparent; border: 1px solid var(--border2);
+             border-radius: 8px; color: var(--dim); font-family: var(--sans);
+             font-size: 13px; cursor: pointer; }
+.footer { margin-top: 28px; padding: 16px; background: var(--surf);
+          border: 1px solid var(--border); border-radius: 10px;
+          font-size: 13px; line-height: 1.65; color: var(--dim); }
+.footer h3 { font-family: var(--serif); font-size: 16px; font-weight: 500;
+             margin-bottom: 8px; color: var(--accent); }
+.footer ul { padding-left: 18px; margin-top: 5px; }
+.footer li { margin-bottom: 4px; }
+.howto { margin-top: 12px; padding: 12px 14px; background: var(--accent-bg);
+         border-radius: 8px; font-size: 12px; color: var(--dim); line-height: 1.65; }
+.howto strong { color: var(--accent); }
+.howto code { background: var(--surf2); padding: 1px 5px; border-radius: 3px;
+              font-family: monospace; font-size: 11px; color: var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Programa de treino - Abril 2026</div>
+  <h1>Saude primeiro,<br><em>resultado depois.</em></h1>
+  <p class="sub">Samuel - 3x por semana - 60 min - protecao lombar</p>
+</header>
+
+<div class="alert">
+  <strong>Regra de ouro:</strong> Pare imediatamente se sentir dor aguda na lombar, formigamento ou dor irradiada para a perna. Dor muscular difusa no dia seguinte e normal -- fisgada lombar nao e.
+</div>
+
+<div class="meta">
+  <div class="meta-card"><div class="meta-lbl">Frequencia</div><div class="meta-val">A -> B -> C</div></div>
+  <div class="meta-card"><div class="meta-lbl">Descanso</div><div class="meta-val">>=1 dia entre treinos</div></div>
+  <div class="meta-card"><div class="meta-lbl">Carga alvo</div><div class="meta-val">RPE 7</div></div>
+  <div class="meta-card"><div class="meta-lbl">Semanas 1-2</div><div class="meta-val">RPE 6 - so tecnica</div></div>
+</div>
+
+<details>
+  <summary>Como interpretar RPE e progressao</summary>
+  <div>
+    <p><strong>RPE 7</strong>: ao terminar a serie, voce sentiria que ainda faria mais 3 repeticoes antes de falhar.</p>
+    <p><strong>Subir carga</strong>: quando atingir o topo da faixa (ex: 12 reps em todas as series) com RPE 7, suba 2-5 kg no proximo treino.</p>
+  </div>
+</details>
+
+<details>
+  <summary>Como personalizar imagens dos exercicios</summary>
+  <div class="howto" style="margin:0">
+    <p><strong>Para trocar a imagem de um exercicio:</strong></p>
+    <ol style="padding-left:18px;margin-top:6px">
+      <li>Acesse o repositorio <code>Treino</code> no GitHub</li>
+      <li>Entre na pasta <code>imagens/</code> (crie se nao existir)</li>
+      <li>Faca upload da imagem com o nome <code>{id_exercicio}.jpg</code> (ex: <code>b2.jpg</code>)</li>
+      <li>Pode ser .jpg, .png, .gif (animado), .jpeg ou .webp</li>
+      <li>A imagem aparece automaticamente no site</li>
+    </ol>
+    <p style="margin-top:10px"><strong>IDs dos exercicios:</strong> a1-a6 (Dia A), b1-b6 (Dia B), c1-c6 (Dia C). Aquecimentos: a_warm, b_warm, c_warm. Aerobicos: a_aero, b_aero, c_aero.</p>
+    <p style="margin-top:10px">Se a imagem da pasta nao existir, o site usa uma imagem padrao automatica.</p>
+  </div>
+</details>
+
+<div class="tabs">
+  <button class="tab on" data-day="a">Dia A<small>Pernas + Costas</small></button>
+  <button class="tab" data-day="b">Dia B<small>Peito + Gluteos</small></button>
+  <button class="tab" data-day="c">Dia C<small>Full Body</small></button>
+</div>
+
+<div class="progress">
+  <span class="prog-txt" id="prog-txt">0 / 0 concluidos</span>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="day on" id="day-a">
+<div class="day-header">
+      <div class="day-title">Dia A - Pernas e Costas</div>
+      <div class="day-sub">Foco em posteriores, quadriceps e puxadas verticais.</div>
+    </div>
+    <div class="section-label">Aquecimento - 8 min</div>
+    <div class="ex" data-ex="a_warm" data-day="a">
+      <div class="ex-img-wrap" id="imgwrap-a_warm">
+      <img class="ex-img" id="img-a_warm"
+           src="imagens/a_warm.jpg"
+           data-chain="imagens/a_warm.jpg;imagens/a_warm.png;imagens/a_warm.gif;imagens/a_warm.jpeg;imagens/a_warm.webp"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-a_warm" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">.</span>
+          <div class="ex-title">Bike leve + mobilidade lombar</div>
+          <input type="checkbox" class="ex-check" data-id="a_warm" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">5 min bike + 10 gato-camelo + 10 rotacoes de quadril</span></div>
+        <p class="ex-tip">Bike em ritmo de conversa facil. Depois, no chao, alterne entre arquear (gato) e relaxar (camelo) a coluna lentamente.</p>
+        
+        <div class="video-row">
+          <a class="video-link" id="vlink-a_warm" href="https://www.youtube.com/results?search_query=gato+camelo+mobilidade+lombar" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="a_warm" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-a_warm" style="display:none">
+          <input type="url" class="video-url-input" data-id="a_warm" value="https://www.youtube.com/results?search_query=gato+camelo+mobilidade+lombar" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="a_warm">Salvar</button>
+          <button class="video-cancel-btn" data-id="a_warm">x</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-label">Principais - ~35 min</div>
+    <div class="ex" data-ex="a1" data-day="a">
+      <div class="ex-img-wrap" id="imgwrap-a1">
+      <img class="ex-img" id="img-a1"
+           src="imagens/a1.jpg"
+           data-chain="imagens/a1.jpg;imagens/a1.png;imagens/a1.gif;imagens/a1.jpeg;imagens/a1.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Sled-45-degree-Leg-Press-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-a1" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">1</span>
+          <div class="ex-title">Leg Press 45</div>
+          <input type="checkbox" class="ex-check" data-id="a1" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10-12</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip"><strong>Lombar e quadril colados no encosto durante TODO o movimento</strong>. Desca ate ~90 nos joelhos, nao trave em cima.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="a1" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-a1"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-a1" href="https://www.youtube.com/watch?v=YmKd0StxtXQ" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="a1" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-a1" style="display:none">
+          <input type="url" class="video-url-input" data-id="a1" value="https://www.youtube.com/watch?v=YmKd0StxtXQ" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="a1">Salvar</button>
+          <button class="video-cancel-btn" data-id="a1">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="a2" data-day="a">
+      <div class="ex-img-wrap" id="imgwrap-a2">
+      <img class="ex-img" id="img-a2"
+           src="imagens/a2.jpg"
+           data-chain="imagens/a2.jpg;imagens/a2.png;imagens/a2.gif;imagens/a2.jpeg;imagens/a2.webp;https://weighttraining.guide/wp-content/uploads/2016/10/seated-leg-curl-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-a2" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">2</span>
+          <div class="ex-title">Cadeira Flexora (sentada)</div>
+          <input type="checkbox" class="ex-check" data-id="a2" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 12</span><span class="pill">RPE 7</span><span class="pill">60s desc.</span></div>
+        <p class="ex-tip">Descida controlada (2-3 segundos). <strong>Prefira a sentada</strong> -- se a deitada pressionar a lombar contra o banco, fique na sentada.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="a2" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-a2"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-a2" href="https://www.youtube.com/watch?v=E59lnzU_LE4" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="a2" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-a2" style="display:none">
+          <input type="url" class="video-url-input" data-id="a2" value="https://www.youtube.com/watch?v=E59lnzU_LE4" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="a2">Salvar</button>
+          <button class="video-cancel-btn" data-id="a2">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="a3" data-day="a">
+      <div class="ex-img-wrap" id="imgwrap-a3">
+      <img class="ex-img" id="img-a3"
+           src="imagens/a3.jpg"
+           data-chain="imagens/a3.jpg;imagens/a3.png;imagens/a3.gif;imagens/a3.jpeg;imagens/a3.webp;https://weighttraining.guide/wp-content/uploads/2016/05/wide-grip-lat-pull-down-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-a3" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">3</span>
+          <div class="ex-title">Puxada Alta (pegada neutra ou supinada)</div>
+          <input type="checkbox" class="ex-check" data-id="a3" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10-12</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip">Puxe ate a altura da clavicula, <strong>nunca atras da nuca</strong>. Peito alto, sem balancar o tronco.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="a3" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-a3"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-a3" href="https://www.youtube.com/watch?v=iunCxFpQgiQ" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="a3" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-a3" style="display:none">
+          <input type="url" class="video-url-input" data-id="a3" value="https://www.youtube.com/watch?v=iunCxFpQgiQ" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="a3">Salvar</button>
+          <button class="video-cancel-btn" data-id="a3">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="a4" data-day="a">
+      <div class="ex-img-wrap" id="imgwrap-a4">
+      <img class="ex-img" id="img-a4"
+           src="imagens/a4.jpg"
+           data-chain="imagens/a4.jpg;imagens/a4.png;imagens/a4.gif;imagens/a4.jpeg;imagens/a4.webp;https://weighttraining.guide/wp-content/uploads/2017/02/straight-back-seated-cable-row-resized-1.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-a4" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">4</span>
+          <div class="ex-title">Remada Articulada (com apoio para o peito)</div>
+          <input type="checkbox" class="ex-check" data-id="a4" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10-12</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip">Use a maquina <strong>com apoio para o peito</strong> -- esse apoio descarrega completamente a lombar. Puxe pelos cotovelos.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="a4" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-a4"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-a4" href="https://www.youtube.com/watch?v=UZa32DfKABY" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="a4" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-a4" style="display:none">
+          <input type="url" class="video-url-input" data-id="a4" value="https://www.youtube.com/watch?v=UZa32DfKABY" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="a4">Salvar</button>
+          <button class="video-cancel-btn" data-id="a4">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="a5" data-day="a">
+      <div class="ex-img-wrap" id="imgwrap-a5">
+      <img class="ex-img" id="img-a5"
+           src="imagens/a5.jpg"
+           data-chain="imagens/a5.jpg;imagens/a5.png;imagens/a5.gif;imagens/a5.jpeg;imagens/a5.webp;https://weighttraining.guide/wp-content/uploads/2019/12/Dead-Bug-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-a5" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">5</span>
+          <div class="ex-title">Dead Bug (core anti-extensao)</div>
+          <input type="checkbox" class="ex-check" data-id="a5" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 8 cada lado</span><span class="pill">Sem carga</span><span class="pill">45s desc.</span></div>
+        <p class="ex-tip"><strong>Lombar colada no chao durante TODO o movimento</strong>. Movimento lento e controlado.</p>
+        
+        <div class="video-row">
+          <a class="video-link" id="vlink-a5" href="https://www.youtube.com/watch?v=uQfzuKBMJeE" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="a5" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-a5" style="display:none">
+          <input type="url" class="video-url-input" data-id="a5" value="https://www.youtube.com/watch?v=uQfzuKBMJeE" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="a5">Salvar</button>
+          <button class="video-cancel-btn" data-id="a5">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="a6" data-day="a">
+      <div class="ex-img-wrap" id="imgwrap-a6">
+      <img class="ex-img" id="img-a6"
+           src="imagens/a6.jpg"
+           data-chain="imagens/a6.jpg;imagens/a6.png;imagens/a6.gif;imagens/a6.jpeg;imagens/a6.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Front-Plank-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-a6" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">6</span>
+          <div class="ex-title">Prancha Frontal</div>
+          <input type="checkbox" class="ex-check" data-id="a6" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 20-40 seg</span><span class="pill">Isometrico</span><span class="pill">45s desc.</span></div>
+        <p class="ex-tip">Gluteos contraidos, quadril alinhado (sem cair, sem subir). <strong>Se a lombar ativar ou doer, pare</strong>.</p>
+        
+        <div class="video-row">
+          <a class="video-link" id="vlink-a6" href="https://www.youtube.com/watch?v=RTxAFDK1OMw" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="a6" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-a6" style="display:none">
+          <input type="url" class="video-url-input" data-id="a6" value="https://www.youtube.com/watch?v=RTxAFDK1OMw" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="a6">Salvar</button>
+          <button class="video-cancel-btn" data-id="a6">x</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-label">Aerobico final - 15-20 min</div>
+    <div class="ex" data-ex="a_aero" data-day="a">
+      <div class="ex-img-wrap" id="imgwrap-a_aero">
+      <img class="ex-img" id="img-a_aero"
+           src="imagens/a_aero.jpg"
+           data-chain="imagens/a_aero.jpg;imagens/a_aero.png;imagens/a_aero.gif;imagens/a_aero.jpeg;imagens/a_aero.webp"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-a_aero" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">.</span>
+          <div class="ex-title">Bike ergometrica (ritmo moderado)</div>
+          <input type="checkbox" class="ex-check" data-id="a_aero" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">15-20 min</span></div>
+        <p class="ex-tip">Voce consegue conversar mas em frases curtas. Zero impacto na coluna -- esse e o item que mais ataca colesterol, glicemia e pressao.</p>
+        
+        
+      </div>
+    </div>
+</div>
+<div class="day" id="day-b">
+<div class="day-header">
+      <div class="day-title">Dia B - Peito, Ombros e Gluteos</div>
+      <div class="day-sub">Empurrar + gluteos fortes (descarregam a lombar).</div>
+    </div>
+    <div class="section-label">Aquecimento - 8 min</div>
+    <div class="ex" data-ex="b_warm" data-day="b">
+      <div class="ex-img-wrap" id="imgwrap-b_warm">
+      <img class="ex-img" id="img-b_warm"
+           src="imagens/b_warm.jpg"
+           data-chain="imagens/b_warm.jpg;imagens/b_warm.png;imagens/b_warm.gif;imagens/b_warm.jpeg;imagens/b_warm.webp"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-b_warm" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">.</span>
+          <div class="ex-title">Eliptico leve + mobilidade</div>
+          <input type="checkbox" class="ex-check" data-id="b_warm" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">5 min eliptico + rotacoes de ombro + 90/90 quadril</span></div>
+        <p class="ex-tip">A mobilidade 90/90 e excelente para abrir o quadril antes do hip thrust.</p>
+        
+        <div class="video-row">
+          <a class="video-link" id="vlink-b_warm" href="https://www.youtube.com/results?search_query=mobilidade+quadril+90+90" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="b_warm" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-b_warm" style="display:none">
+          <input type="url" class="video-url-input" data-id="b_warm" value="https://www.youtube.com/results?search_query=mobilidade+quadril+90+90" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="b_warm">Salvar</button>
+          <button class="video-cancel-btn" data-id="b_warm">x</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-label">Principais - ~35 min</div>
+    <div class="ex" data-ex="b1" data-day="b">
+      <div class="ex-img-wrap" id="imgwrap-b1">
+      <img class="ex-img" id="img-b1"
+           src="imagens/b1.jpg"
+           data-chain="imagens/b1.jpg;imagens/b1.png;imagens/b1.gif;imagens/b1.jpeg;imagens/b1.webp;https://weighttraining.guide/wp-content/uploads/2016/12/machine-chest-press-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-b1" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">1</span>
+          <div class="ex-title">Supino Maquina (Chest Press)</div>
+          <input type="checkbox" class="ex-check" data-id="b1" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10-12</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip">Ombros encostados no banco, descida controlada, <strong>nao trave o cotovelo</strong> na volta.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="b1" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-b1"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-b1" href="https://www.youtube.com/watch?v=qmSOsrheLEg" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="b1" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-b1" style="display:none">
+          <input type="url" class="video-url-input" data-id="b1" value="https://www.youtube.com/watch?v=qmSOsrheLEg" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="b1">Salvar</button>
+          <button class="video-cancel-btn" data-id="b1">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="b2" data-day="b">
+      <div class="ex-img-wrap" id="imgwrap-b2">
+      <img class="ex-img" id="img-b2"
+           src="imagens/b2.jpg"
+           data-chain="imagens/b2.jpg;imagens/b2.png;imagens/b2.gif;imagens/b2.jpeg;imagens/b2.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Machine-Seated-Shoulder-Press-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-b2" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">2</span>
+          <div class="ex-title">Desenvolvimento Maquina (Shoulder Press)</div>
+          <input type="checkbox" class="ex-check" data-id="b2" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip"><strong>NAO arqueie a lombar</strong> para empurrar mais peso. Banco em 90 de preferencia.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="b2" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-b2"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-b2" href="https://www.youtube.com/results?search_query=desenvolvimento+ombro+maquina+execucao" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="b2" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-b2" style="display:none">
+          <input type="url" class="video-url-input" data-id="b2" value="https://www.youtube.com/results?search_query=desenvolvimento+ombro+maquina+execucao" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="b2">Salvar</button>
+          <button class="video-cancel-btn" data-id="b2">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="b3" data-day="b">
+      <div class="ex-img-wrap" id="imgwrap-b3">
+      <img class="ex-img" id="img-b3"
+           src="imagens/b3.jpg"
+           data-chain="imagens/b3.jpg;imagens/b3.png;imagens/b3.gif;imagens/b3.jpeg;imagens/b3.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Barbell-Hip-Thrust-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-b3" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">3</span>
+          <div class="ex-title">Hip Thrust (maquina ou apoiado no banco)</div>
+          <input type="checkbox" class="ex-check" data-id="b3" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 12</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip"><strong>Queixo no peito (nao olhe para cima)</strong>. Contracao forte de gluteo no alto, sem hiperestender lombar. Use almofada sobre o quadril se for com barra.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="b3" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-b3"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-b3" href="https://www.youtube.com/watch?v=Y0CalyZrWcc" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="b3" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-b3" style="display:none">
+          <input type="url" class="video-url-input" data-id="b3" value="https://www.youtube.com/watch?v=Y0CalyZrWcc" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="b3">Salvar</button>
+          <button class="video-cancel-btn" data-id="b3">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="b4" data-day="b">
+      <div class="ex-img-wrap" id="imgwrap-b4">
+      <img class="ex-img" id="img-b4"
+           src="imagens/b4.jpg"
+           data-chain="imagens/b4.jpg;imagens/b4.png;imagens/b4.gif;imagens/b4.jpeg;imagens/b4.webp;https://weighttraining.guide/wp-content/uploads/2016/05/wide-grip-lat-pull-down-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-b4" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">4</span>
+          <div class="ex-title">Puxada Alta (pegada aberta pronada)</div>
+          <input type="checkbox" class="ex-check" data-id="b4" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10-12</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip">Maos um pouco alem da largura dos ombros. Puxe encostando a barra <strong>no peito alto</strong>.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="b4" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-b4"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-b4" href="https://www.youtube.com/watch?v=mPmfwbc_svw" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="b4" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-b4" style="display:none">
+          <input type="url" class="video-url-input" data-id="b4" value="https://www.youtube.com/watch?v=mPmfwbc_svw" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="b4">Salvar</button>
+          <button class="video-cancel-btn" data-id="b4">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="b5" data-day="b">
+      <div class="ex-img-wrap" id="imgwrap-b5">
+      <img class="ex-img" id="img-b5"
+           src="imagens/b5.jpg"
+           data-chain="imagens/b5.jpg;imagens/b5.png;imagens/b5.gif;imagens/b5.jpeg;imagens/b5.webp;https://weighttraining.guide/wp-content/uploads/2017/08/bird-dog-plank-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-b5" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">5</span>
+          <div class="ex-title">Bird Dog (estabilizacao lombar)</div>
+          <input type="checkbox" class="ex-check" data-id="b5" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 8 cada lado</span><span class="pill">Sem carga</span><span class="pill">45s desc.</span></div>
+        <p class="ex-tip">Braco e perna <strong>opostos</strong>, movimento lento. Quadril parado, nao rotacione.</p>
+        
+        <div class="video-row">
+          <a class="video-link" id="vlink-b5" href="https://www.youtube.com/watch?v=k2azbhhuKuM" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="b5" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-b5" style="display:none">
+          <input type="url" class="video-url-input" data-id="b5" value="https://www.youtube.com/watch?v=k2azbhhuKuM" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="b5">Salvar</button>
+          <button class="video-cancel-btn" data-id="b5">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="b6" data-day="b">
+      <div class="ex-img-wrap" id="imgwrap-b6">
+      <img class="ex-img" id="img-b6"
+           src="imagens/b6.jpg"
+           data-chain="imagens/b6.jpg;imagens/b6.png;imagens/b6.gif;imagens/b6.jpeg;imagens/b6.webp;https://weighttraining.guide/wp-content/uploads/2018/01/Cable-horizontal-Pallof-Press-2-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-b6" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">6</span>
+          <div class="ex-title">Pallof Press (cabo, anti-rotacao)</div>
+          <input type="checkbox" class="ex-check" data-id="b6" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10 cada lado</span><span class="pill">Carga leve</span><span class="pill">45s desc.</span></div>
+        <p class="ex-tip">De lado para o cabo, empurre para frente <strong>resistindo a rotacao</strong>. Comece com pouquissima carga.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="b6" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-b6"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-b6" href="https://www.youtube.com/watch?v=GkWSGGdxliE" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="b6" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-b6" style="display:none">
+          <input type="url" class="video-url-input" data-id="b6" value="https://www.youtube.com/watch?v=GkWSGGdxliE" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="b6">Salvar</button>
+          <button class="video-cancel-btn" data-id="b6">x</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-label">Aerobico final - 15-20 min</div>
+    <div class="ex" data-ex="b_aero" data-day="b">
+      <div class="ex-img-wrap" id="imgwrap-b_aero">
+      <img class="ex-img" id="img-b_aero"
+           src="imagens/b_aero.jpg"
+           data-chain="imagens/b_aero.jpg;imagens/b_aero.png;imagens/b_aero.gif;imagens/b_aero.jpeg;imagens/b_aero.webp"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-b_aero" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">.</span>
+          <div class="ex-title">Esteira inclinada (5-8%) ou eliptico</div>
+          <input type="checkbox" class="ex-check" data-id="b_aero" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">15-20 min</span></div>
+        <p class="ex-tip"><strong>Caminhada rapida na esteira inclinada</strong> -- nao correr enquanto sintomatico a impacto.</p>
+        
+        
+      </div>
+    </div>
+</div>
+<div class="day" id="day-c">
+<div class="day-header">
+      <div class="day-title">Dia C - Full Body Composto</div>
+      <div class="day-sub">Movimentos globais com halteres - prioriza queima calorica.</div>
+    </div>
+    <div class="section-label">Aquecimento - 8 min</div>
+    <div class="ex" data-ex="c_warm" data-day="c">
+      <div class="ex-img-wrap" id="imgwrap-c_warm">
+      <img class="ex-img" id="img-c_warm"
+           src="imagens/c_warm.jpg"
+           data-chain="imagens/c_warm.jpg;imagens/c_warm.png;imagens/c_warm.gif;imagens/c_warm.jpeg;imagens/c_warm.webp"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-c_warm" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">.</span>
+          <div class="ex-title">Caminhada inclinada + mobilidade</div>
+          <input type="checkbox" class="ex-check" data-id="c_warm" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">5 min esteira 5% + 10 agachamentos sem peso + 10 gato-camelo</span></div>
+        <p class="ex-tip">Aquecimento global focado em quadril e coluna.</p>
+        
+        
+      </div>
+    </div>
+    <div class="section-label">Principais - ~35 min</div>
+    <div class="ex" data-ex="c1" data-day="c">
+      <div class="ex-img-wrap" id="imgwrap-c1">
+      <img class="ex-img" id="img-c1"
+           src="imagens/c1.jpg"
+           data-chain="imagens/c1.jpg;imagens/c1.png;imagens/c1.gif;imagens/c1.jpeg;imagens/c1.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Goblet-Squat-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-c1" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">1</span>
+          <div class="ex-title">Agachamento Goblet (halter no peito)</div>
+          <input type="checkbox" class="ex-check" data-id="c1" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip">Halter contra o peito (<strong>protege a lombar</strong>). Peito alto, joelhos na direcao dos pes. <strong>Alternativa segura:</strong> Hack Squat na maquina.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="c1" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-c1"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-c1" href="https://www.youtube.com/watch?v=DF9sXArkDUw" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="c1" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-c1" style="display:none">
+          <input type="url" class="video-url-input" data-id="c1" value="https://www.youtube.com/watch?v=DF9sXArkDUw" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="c1">Salvar</button>
+          <button class="video-cancel-btn" data-id="c1">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="c2" data-day="c">
+      <div class="ex-img-wrap" id="imgwrap-c2">
+      <img class="ex-img" id="img-c2"
+           src="imagens/c2.jpg"
+           data-chain="imagens/c2.jpg;imagens/c2.png;imagens/c2.gif;imagens/c2.jpeg;imagens/c2.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Bench-Press-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-c2" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">2</span>
+          <div class="ex-title">Supino com Halteres (banco reto)</div>
+          <input type="checkbox" class="ex-check" data-id="c2" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip"><strong>Lombar neutra (vao natural), nao arqueie exageradamente</strong>. Descida controlada.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="c2" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-c2"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-c2" href="https://www.youtube.com/results?search_query=supino+halteres+banco+reto+execucao" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="c2" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-c2" style="display:none">
+          <input type="url" class="video-url-input" data-id="c2" value="https://www.youtube.com/results?search_query=supino+halteres+banco+reto+execucao" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="c2">Salvar</button>
+          <button class="video-cancel-btn" data-id="c2">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="c3" data-day="c">
+      <div class="ex-img-wrap" id="imgwrap-c3">
+      <img class="ex-img" id="img-c3"
+           src="imagens/c3.jpg"
+           data-chain="imagens/c3.jpg;imagens/c3.png;imagens/c3.gif;imagens/c3.jpeg;imagens/c3.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Seated-Cable-Row-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-c3" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">3</span>
+          <div class="ex-title">Remada Baixa no Cabo (triangulo)</div>
+          <input type="checkbox" class="ex-check" data-id="c3" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10-12</span><span class="pill">RPE 7</span><span class="pill">90s desc.</span></div>
+        <p class="ex-tip">Tronco praticamente estatico em ~90. <strong>NAO balance para frente e para tras</strong>. Puxe pelos cotovelos.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="c3" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-c3"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-c3" href="https://www.youtube.com/results?search_query=remada+baixa+cabo+triangulo+execucao" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="c3" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-c3" style="display:none">
+          <input type="url" class="video-url-input" data-id="c3" value="https://www.youtube.com/results?search_query=remada+baixa+cabo+triangulo+execucao" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="c3">Salvar</button>
+          <button class="video-cancel-btn" data-id="c3">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="c4" data-day="c">
+      <div class="ex-img-wrap" id="imgwrap-c4">
+      <img class="ex-img" id="img-c4"
+           src="imagens/c4.jpg"
+           data-chain="imagens/c4.jpg;imagens/c4.png;imagens/c4.gif;imagens/c4.jpeg;imagens/c4.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Glute-Bridge-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-c4" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">4</span>
+          <div class="ex-title">Elevacao Pelvica no solo (glute bridge)</div>
+          <input type="checkbox" class="ex-check" data-id="c4" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 12-15</span><span class="pill">RPE 7</span><span class="pill">60s desc.</span></div>
+        <p class="ex-tip">Comece sem carga; quando dominar, coloque halter sobre o quadril. <strong>Sem hiperestender lombar</strong>.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="c4" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-c4"></span>
+        </div>
+        <div class="video-row">
+          <a class="video-link" id="vlink-c4" href="https://www.youtube.com/watch?v=7hHS1kYYMv8" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="c4" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-c4" style="display:none">
+          <input type="url" class="video-url-input" data-id="c4" value="https://www.youtube.com/watch?v=7hHS1kYYMv8" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="c4">Salvar</button>
+          <button class="video-cancel-btn" data-id="c4">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="c5" data-day="c">
+      <div class="ex-img-wrap" id="imgwrap-c5">
+      <img class="ex-img" id="img-c5"
+           src="imagens/c5.jpg"
+           data-chain="imagens/c5.jpg;imagens/c5.png;imagens/c5.gif;imagens/c5.jpeg;imagens/c5.webp;https://weighttraining.guide/wp-content/uploads/2016/05/Side-Bridge-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-c5" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">5</span>
+          <div class="ex-title">Prancha Lateral</div>
+          <input type="checkbox" class="ex-check" data-id="c5" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 15-30 seg cada</span><span class="pill">Isometrico</span><span class="pill">45s desc.</span></div>
+        <p class="ex-tip">Apoio no antebraco e lateral do pe, corpo em linha reta. <strong>Se for dificil, apoie o joelho de baixo no chao</strong>.</p>
+        
+        <div class="video-row">
+          <a class="video-link" id="vlink-c5" href="https://www.youtube.com/watch?v=RTxAFDK1OMw" target="_blank" rel="noopener">Ver video demonstrativo</a>
+          <button class="video-edit-btn" data-id="c5" title="Editar link">edit</button>
+        </div>
+        <div class="video-edit-row" id="vedit-c5" style="display:none">
+          <input type="url" class="video-url-input" data-id="c5" value="https://www.youtube.com/watch?v=RTxAFDK1OMw" placeholder="Cole o link" autocomplete="off">
+          <button class="video-save-btn" data-id="c5">Salvar</button>
+          <button class="video-cancel-btn" data-id="c5">x</button>
+        </div>
+      </div>
+    </div><div class="ex" data-ex="c6" data-day="c">
+      <div class="ex-img-wrap" id="imgwrap-c6">
+      <img class="ex-img" id="img-c6"
+           src="imagens/c6.jpg"
+           data-chain="imagens/c6.jpg;imagens/c6.png;imagens/c6.gif;imagens/c6.jpeg;imagens/c6.webp;https://weighttraining.guide/wp-content/uploads/2018/01/Cable-horizontal-Pallof-Press-2-resized.png"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-c6" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">6</span>
+          <div class="ex-title">Pallof Press OU Dead Bug (alternar)</div>
+          <input type="checkbox" class="ex-check" data-id="c6" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">3 x 10</span><span class="pill">Carga leve</span><span class="pill">45s desc.</span></div>
+        <p class="ex-tip">Escolha o que <strong>nao</strong> fez nos dias A ou B nesta semana.</p>
+        <div class="weight-row">
+          <span class="weight-label">Carga</span>
+          <input type="text" class="weight-input" data-id="c6" placeholder="ex: 40kg" autocomplete="off">
+          <span class="weight-saved" id="ws-c6"></span>
+        </div>
+        
+      </div>
+    </div>
+    <div class="section-label">Aerobico final - 15-20 min</div>
+    <div class="ex" data-ex="c_aero" data-day="c">
+      <div class="ex-img-wrap" id="imgwrap-c_aero">
+      <img class="ex-img" id="img-c_aero"
+           src="imagens/c_aero.jpg"
+           data-chain="imagens/c_aero.jpg;imagens/c_aero.png;imagens/c_aero.gif;imagens/c_aero.jpeg;imagens/c_aero.webp"
+           data-step="0"
+           alt=""
+           loading="lazy"
+           onerror="tryNextImage(this)">
+      <div class="ex-img-placeholder" id="ph-c_aero" style="display:none">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Sem imagem</span>
+      </div>
+    </div>
+      <div class="ex-body">
+        <div class="ex-head">
+          <span class="ex-num">.</span>
+          <div class="ex-title">Escolha livre: bike, eliptico ou esteira inclinada</div>
+          <input type="checkbox" class="ex-check" data-id="c_aero" aria-label="Concluido">
+        </div>
+        <div class="pills"><span class="pill primary">15-20 min</span></div>
+        <p class="ex-tip">Alterne entre as modalidades ao longo da semana. O importante e manter 20 min em ritmo moderado.</p>
+        
+        
+      </div>
+    </div>
+</div>
+
+<button class="reset-btn" id="reset-btn">Resetar marcacoes deste dia</button>
+
+<details style="margin-top:20px">
+  <summary>Movimentos a evitar (hernia lombar)</summary>
+  <div><ul>
+    <li>Corrida e impacto (ate estar assintomatico)</li>
+    <li>Agachamento livre com barra nas costas</li>
+    <li>Levantamento terra convencional</li>
+    <li>Abdominal crunch / sit-up</li>
+    <li>Hiperextensao lombar com carga</li>
+    <li>Remada curvada livre (use a articulada)</li>
+  </ul></div>
+</details>
+
+<details>
+  <summary>Sinais de alerta - procurar medico</summary>
+  <div>
+    <p>Pare imediatamente se surgir:</p>
+    <ul>
+      <li>Dor irradiada para a perna ou nadega</li>
+      <li>Formigamento ou dormencia nos pes</li>
+      <li>Fraqueza ao levantar o pe</li>
+      <li>Dor lombar aguda em pontada</li>
+    </ul>
+  </div>
+</details>
+
+<div class="footer">
+  <h3>Importante</h3>
+  <p>Este programa e uma referencia baseada em boas praticas. Nao substitui avaliacao presencial.</p>
+  <ul>
+    <li>Busque liberacao medica (ortopedista ou fisiatra)</li>
+    <li>Nas primeiras semanas, peca a um educador fisico para corrigir sua execucao</li>
+    <li>Se a dor lombar voltar, suspenda e procure orientacao</li>
+  </ul>
+</div>
+
+</div>
+<script>
+// --- Image fallback chain ---
+function tryNextImage(img) {
+  var chain = (img.dataset.chain || '').split(';');
+  var step = parseInt(img.dataset.step || '0', 10) + 1;
+  if (step >= chain.length) {
+    // No more sources, show placeholder
+    img.style.display = 'none';
+    var exId = img.id.replace('img-', '');
+    var ph = document.getElementById('ph-' + exId);
+    if (ph) ph.style.display = 'flex';
+    return;
+  }
+  img.dataset.step = step;
+  img.src = chain[step];
+}
+
+// --- State (only weights, checks, videos, day; NO images) ---
+var KEY = 'treino-samuel-v4';
+function load() { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { return {}; } }
+function save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e) {} }
+var S = load();
+if (!S.checks)  S.checks  = {};
+if (!S.weights) S.weights = {};
+if (!S.videos)  S.videos  = {};
+if (!S.day)     S.day     = 'a';
+
+// Migration: clean up old image keys from previous versions
+try {
+  var oldKeys = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (k && k.indexOf('treino-img-') === 0) oldKeys.push(k);
+  }
+  oldKeys.forEach(function(k) { localStorage.removeItem(k); });
+  // Remove old version keys
+  ['treino-samuel-v3','treino-samuel-v2','treino-samuel-v1'].forEach(function(k) {
+    try { localStorage.removeItem(k); } catch(e) {}
+  });
+} catch(e) {}
+
+// --- Tabs ---
+var tabs = document.querySelectorAll('.tab');
+var days = document.querySelectorAll('.day');
+function activateDay(d) {
+  for (var i = 0; i < tabs.length; i++) {
+    if (tabs[i].dataset.day === d) tabs[i].classList.add('on');
+    else tabs[i].classList.remove('on');
+  }
+  for (var j = 0; j < days.length; j++) {
+    if (days[j].id === 'day-' + d) days[j].classList.add('on');
+    else days[j].classList.remove('on');
+  }
+  S.day = d; save(S); updateProgress();
+}
+for (var i = 0; i < tabs.length; i++) {
+  tabs[i].addEventListener('click', function() {
+    activateDay(this.dataset.day);
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+}
+
+// --- Checkboxes ---
+var checks = document.querySelectorAll('.ex-check');
+for (var i = 0; i < checks.length; i++) {
+  var cb = checks[i];
+  var id = cb.dataset.id;
+  if (S.checks[id]) {
+    cb.checked = true;
+    cb.closest('.ex').classList.add('done');
+  }
+  cb.addEventListener('change', function(e) {
+    var ex = e.target.closest('.ex');
+    var id = e.target.dataset.id;
+    if (e.target.checked) {
+      ex.classList.add('done');
+      S.checks[id] = 1;
+    } else {
+      ex.classList.remove('done');
+      delete S.checks[id];
+    }
+    save(S); updateProgress();
+  });
+}
+
+// --- Weight inputs ---
+var weights = document.querySelectorAll('.weight-input');
+for (var i = 0; i < weights.length; i++) {
+  var inp = weights[i];
+  var id = inp.dataset.id;
+  if (S.weights[id]) inp.value = S.weights[id];
+  inp.addEventListener('input', function(e) {
+    var id = e.target.dataset.id;
+    var v = e.target.value.trim();
+    if (v) S.weights[id] = v;
+    else delete S.weights[id];
+    save(S);
+    var el = document.getElementById('ws-' + id);
+    if (el) {
+      el.textContent = 'salvo';
+      el.classList.add('show');
+      setTimeout(function() { el.classList.remove('show'); }, 1500);
+    }
+  });
+}
+
+// --- Video link editing ---
+var videoLinks = document.querySelectorAll('.video-link');
+for (var i = 0; i < videoLinks.length; i++) {
+  var link = videoLinks[i];
+  var id = link.id.replace('vlink-', '');
+  if (S.videos[id]) link.href = S.videos[id];
+}
+var videoInputs = document.querySelectorAll('.video-url-input');
+for (var i = 0; i < videoInputs.length; i++) {
+  var vinp = videoInputs[i];
+  var id = vinp.dataset.id;
+  if (S.videos[id]) vinp.value = S.videos[id];
+}
+
+var editBtns = document.querySelectorAll('.video-edit-btn');
+for (var i = 0; i < editBtns.length; i++) {
+  editBtns[i].addEventListener('click', function() {
+    var id = this.dataset.id;
+    document.getElementById('vedit-' + id).style.display = 'flex';
+    var inp = document.querySelector('.video-url-input[data-id="' + id + '"]');
+    if (inp) { inp.focus(); inp.select(); }
+  });
+}
+var saveBtns = document.querySelectorAll('.video-save-btn');
+for (var i = 0; i < saveBtns.length; i++) {
+  saveBtns[i].addEventListener('click', function() {
+    var id = this.dataset.id;
+    var inp = document.querySelector('.video-url-input[data-id="' + id + '"]');
+    var link = document.getElementById('vlink-' + id);
+    if (!inp || !link) return;
+    var v = inp.value.trim();
+    if (v) {
+      link.href = v;
+      S.videos[id] = v;
+      save(S);
+    }
+    document.getElementById('vedit-' + id).style.display = 'none';
+  });
+}
+var cancelBtns = document.querySelectorAll('.video-cancel-btn');
+for (var i = 0; i < cancelBtns.length; i++) {
+  cancelBtns[i].addEventListener('click', function() {
+    var id = this.dataset.id;
+    var link = document.getElementById('vlink-' + id);
+    var inp = document.querySelector('.video-url-input[data-id="' + id + '"]');
+    if (link && inp) inp.value = link.href;
+    document.getElementById('vedit-' + id).style.display = 'none';
+  });
+}
+
+// --- Reset ---
+document.getElementById('reset-btn').addEventListener('click', function() {
+  if (!confirm('Resetar marcacoes deste dia?')) return;
+  var d = S.day;
+  var dchecks = document.querySelectorAll('#day-' + d + ' .ex-check');
+  for (var i = 0; i < dchecks.length; i++) {
+    dchecks[i].checked = false;
+    dchecks[i].closest('.ex').classList.remove('done');
+    delete S.checks[dchecks[i].dataset.id];
+  }
+  save(S); updateProgress();
+});
+
+// --- Progress ---
+function updateProgress() {
+  var d = S.day;
+  var el = document.getElementById('day-' + d);
+  if (!el) return;
+  var total = el.querySelectorAll('.ex-check').length;
+  var done = el.querySelectorAll('.ex-check:checked').length;
+  document.getElementById('prog-txt').textContent = done + ' / ' + total + ' concluidos';
+  document.getElementById('prog-fill').style.width = total ? (done/total*100) + '%' : '0%';
+}
+
+// --- Init ---
+activateDay(S.day);
+</script>
+</body>
+</html>
